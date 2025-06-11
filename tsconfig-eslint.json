@@ -1,0 +1,33 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "packages/**/*.ts",
+    "packages/**/*.tsx",
+    "packages/**/*.js",
+    "packages/**/*.jsx",
+    "packages/**/*.json",
+    ".eslintrc.js",
+    "*.config.js",
+    "*.config.ts",
+    "*.config.mjs"
+  ],
+  "exclude": [
+    "node_modules",
+    "public",
+    "stories",
+    "**/*.img",
+    "**/*.png",
+    "**/*.svg",
+    "**/*.woff",
+    "**/*.woff2",
+    "**/*.ttf",
+    "**/*.ico",
+    "**/*.pdf",
+    "**/*.xml",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/storybook-static/**"
+  ]
+} 

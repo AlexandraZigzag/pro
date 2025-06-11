@@ -1,0 +1,62 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@components/*": ["./src/components/*"],
+      "@widgets/*": ["./src/widgets/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@hooks/*": ["./src/hooks/*"],
+      "@store/*": ["./src/store/*"],
+      "@api/*": ["./src/api/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@router/*": ["./src/router/*"],
+      "@public/*": ["./public/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.mjs",
+    "**/*.json",
+    ".eslintrc.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "public",
+    "stories",
+    "**/*.img",
+    "**/*.png",
+    "**/*.svg",
+    "**/*.woff",
+    "**/*.woff2",
+    "**/*.ttf",
+    "**/*.ico",
+    "**/*.pdf",
+    "**/*.xml",
+    "**/dist/**",
+    "**/build/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/storybook-static/**"
+  ]
+}
