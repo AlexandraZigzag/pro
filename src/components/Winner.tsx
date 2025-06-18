@@ -36,5 +36,6 @@ export function checkWinner(squares) {
       return squares[a]; // 'X' или 'O'
     }
   }
+
   return null; // победителя нет
 }

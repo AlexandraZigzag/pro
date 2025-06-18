@@ -1,21 +1,47 @@
 .wrapper {
-    min-height: 1000px;
-    width: 1000px;
-    background: #1a1a1a;
+    min-height: 800px;
+    width: 800px;
+    background: linear-gradient(45deg, #08041d, #200852);
+    background-attachment: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
 }
+
+.nameGame {
+    font-size: 48px;
+    font-weight: 500;
+    font-family: inherit;
+    color: #e8e5e5;
+    margin-bottom: 100px;
+}
+
+
 .startButton {
     margin-bottom: 50px;
+    background: #3db1ff;
+    outline: none;
+
 }
 .startButton:hover {
     transition: .3s ease-in-out;
-    background: #cac9c9;
+    background: #5f7de3;
 }
+.startButton:focus {
+    outline: none;
+}
+
 .infoGame {
     margin-top: 20px;
-    background: #cac9c9;
+    background: #3db1ff;
     padding: 10px;
+    font-size: 28px;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 8px;
+
 }
+
+
+

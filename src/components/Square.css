@@ -1,8 +1,7 @@
 .square {
     width: 100px;
     height: 100px;
-    background: white;
-    border: 1px solid #1a1a1a;
+    border: 3px solid #3db1ff;
     cursor: pointer;
     outline: none;
     font-size: 50px;
@@ -12,8 +11,12 @@
     border-radius: 0;
     margin: 0 auto;
     padding: 0;
+    /*background: black;*/
 }
 .square:hover {
-    background: #cac9c9;
+    background: #5f7de3;
     transition: .3s ease-in-out;
+}
+.square:focus {
+    outline: none;
 }
