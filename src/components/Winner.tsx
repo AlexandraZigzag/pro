@@ -1,22 +1,5 @@
-// export function calculateWinner(squares: string) {
-//   const lines = [
-//     [0, 1, 2],
-//     [3, 4, 5],
-//     [6, 7, 8],
-//     [0, 3, 6],
-//     [1, 4, 7],
-//     [2, 5, 8],
-//     [0, 4, 8],
-//     [2, 4, 6]
-//   ];
-//   for (let i = 0; i < squares.length; i++) {
-//     const [a, b, c] = lines[i];
-//     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-//       return squares[a];
-//     }
-//   }
-//   return null;
-// }
+
+import './Winner.css';
 
 export function checkWinner(squares) {
   const winningCombinations = [
@@ -30,11 +13,26 @@ export function checkWinner(squares) {
     [2, 4, 6] // диагональ
   ];
 
-  for (const [a, b, c] of winningCombinations) {
+  for (const combo of winningCombinations) {
+    const [a, b, c] = combo;
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
-      return squares[a]; // 'X' или 'O'
+
+      // Подсвечиваем выигрышные клетки
+      combo.forEach(index => {
+        const squareElement = document.querySelector(`.square:nth-child(${index + 1})`);
+        if (squareElement) {
+          squareElement.classList.add('winning-square');
+        }
+      });
+
+      return squares[a]; // Возвращаем 'X' или 'O'
     }
   }
 
-  return null; // победителя нет
+  // Сбрасываем подсветку при новом ходе
+  document.querySelectorAll('.square').forEach(sq => {
+    sq.classList.remove('winning-square');
+  });
+
+  return null;
 }
