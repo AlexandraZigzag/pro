@@ -30,8 +30,7 @@ export function checkWinner(squares) {
     [2, 4, 6] // диагональ
   ];
 
-  for (let combo of winningCombinations) {
-    const [a, b, c] = combo;
+  for (const [a, b, c] of winningCombinations) {
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a]; // 'X' или 'O'
     }

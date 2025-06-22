@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './Game.css';
 import Board from '@components/Board';
 import { checkWinner } from '@components/Winner';
@@ -13,11 +13,13 @@ const Game = () => {
   // const [score, setScore] = useState({ 'X': 0, 'O': 0);
 
   const handleClick = (index) => {
+    if (winner || board[index] || botThinking) return;  //еще нет победителя продолжаем игру и блокируем клики ничего не возвращаем
+
     const boardCopy = [...board];  //копируем доску
-    if (winner || boardCopy[index] || botThinking) return;  //еще нет победителя продолжаем игру и блокируем клики ничего не возвращаем
-    boardCopy[index] = xIsNext ? 'X' : '0'; //обозначение на доске
+    boardCopy[index] = xIsNext ? 'X' : 'O'; //обозначение на доске
     setBoard(boardCopy); //отображается ход только крестик
-    setXIsNext(false); //ход бота
+    setXIsNext(!xIsNext);//ход бота
+    if (!xIsNext) return;
     setBotThinking(true); //анимация работает
   };
 
@@ -32,22 +34,56 @@ const Game = () => {
 
   };
 
-  const makeBotMove = () => {
-    const emptySquare = board
-      .map((square, index) => (square === null ? index : null))
-      .filter((index) => index !== null) as number[];
 
-    if (emptySquare.length > 0) {
-      const randomIndex = Math.floor(Math.random() * emptySquare.length);
-      const botMove = emptySquare[randomIndex];
+  const makeBotMove = useCallback(() => {
+    const emptySquares = board
+      .map((square, index) => square === null ? index : null)
+      .filter(val => val !== null);
 
-      const boardCopy = [...board];
-      boardCopy[botMove] = 'O';
-      setBoard(boardCopy);
-      setXIsNext(true);
+    if (emptySquares.length === 0 || winner) {
+      setBotThinking(false);
+      return;
     }
+
+    const randomIndex = Math.floor(Math.random() * emptySquares.length);
+    const botMove = emptySquares[randomIndex];
+
+    const boardCopy = [...board];
+    boardCopy[botMove] = 'O';
+    setBoard(boardCopy);
+    setXIsNext(true);
     setBotThinking(false);
-  };
+  }, [board, winner]);
+
+  useEffect(() => {
+    // Прекращаем выполнение если:
+    // 1. Есть победитель
+    // 2. Нет свободных клеток
+    // 3. Сейчас очередь игрока (xIsNext)
+    if (winner || !board.includes(null) || xIsNext) {
+      setBotThinking(false);
+      return;
+    }
+
+    // Запускаем ход бота
+    setBotThinking(true);
+    const timer = setTimeout(() => {
+      const emptySquares = board
+        .map((square, index) => square === null ? index : null)
+        .filter(index => index !== null);
+
+      if (emptySquares.length > 0) {
+        const randomIndex = Math.floor(Math.random() * emptySquares.length);
+        const boardCopy = [...board];
+        boardCopy[emptySquares[randomIndex]] = 'O';
+        setBoard(boardCopy);
+        setXIsNext(true);
+      }
+      setBotThinking(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [xIsNext, winner, board]);
 
   useEffect(() => {
     if (!botThinking) {
@@ -61,14 +97,6 @@ const Game = () => {
     return () => clearInterval(timer);
   }, [botThinking]);
 
-  useEffect(() => {
-    if (!xIsNext && !winner) {
-      const timer = setTimeout(() => {
-        makeBotMove();
-      }, 2000);
-      return () => clearTimeout(timer);
-    }
-  }, [board, xIsNext, winner]);
 
   const whoIsNext = () => {
     if (winner) {
