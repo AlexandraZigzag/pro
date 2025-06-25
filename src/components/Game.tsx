@@ -6,31 +6,30 @@ import { checkWinner } from '@components/Winner';
 
 const Game = () => {
   const [board, setBoard] = useState(Array(9).fill(null));
-  const [xIsNext, setXIsNext] = useState(true);  //определяем кто первый ходит
-  const winner = checkWinner(board); //определяем победителя
-  const [botThinking, setBotThinking] = useState(false); //вкл и выкл бот
-  const [thinkingDots, setThinkingDots] = useState(''); // думает бот анимация
-  // const [score, setScore] = useState({ 'X': 0, 'O': 0);
+  const [xIsNext, setXIsNext] = useState(true);
+  const winner = checkWinner(board);
+  const [botThinking, setBotThinking] = useState(false);
+  const [thinkingDots, setThinkingDots] = useState('');
 
   const handleClick = (index) => {
-    if (winner || board[index] || botThinking) return;  //еще нет победителя продолжаем игру и блокируем клики ничего не возвращаем
+    if (winner || board[index] || botThinking) return;
 
-    const boardCopy = [...board];  //копируем доску
-    boardCopy[index] = xIsNext ? 'X' : 'O'; //обозначение на доске
-    setBoard(boardCopy); //отображается ход только крестик
-    setXIsNext(!xIsNext);//ход бота
+    const boardCopy = [...board];
+    boardCopy[index] = xIsNext ? 'X' : 'O';
+    setBoard(boardCopy);
+    setXIsNext(!xIsNext);
     if (!xIsNext) return;
-    setBotThinking(true); //анимация работает
+    setBotThinking(true);
   };
 
 
   const startGame = () => {
     return (
       <button className="startButton" onClick={() => {
-        setXIsNext(true); //всегда начинает крестик
+        setXIsNext(true);
         setBotThinking (false);
         setThinkingDots('');
-        setBoard(Array(9).fill(null))}}>Новая игра</button>) //возвращает пустую доску
+        setBoard(Array(9).fill(null))}}>Новая игра</button>)
 
   };
 
@@ -56,16 +55,11 @@ const Game = () => {
   }, [board, winner]);
 
   useEffect(() => {
-    // Прекращаем выполнение если:
-    // 1. Есть победитель
-    // 2. Нет свободных клеток
-    // 3. Сейчас очередь игрока (xIsNext)
     if (winner || !board.includes(null) || xIsNext) {
       setBotThinking(false);
       return;
     }
 
-    // Запускаем ход бота
     setBotThinking(true);
     const timer = setTimeout(() => {
       const emptySquares = board
